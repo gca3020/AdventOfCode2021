@@ -16,3 +16,6 @@ vendor/
 
 # JetBrains IDE configuration
 .idea/
+
+# Ignore input files
+input

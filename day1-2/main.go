@@ -10,34 +10,31 @@ import (
 
 func main() {
 	// Open the input file
-	file, err := os.Open("day1-1/input")
+	file, err := os.Open("day1-2/input")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer file.Close()
 
-	// Read through it line by line
-	increasing := 0
-	total := 0
+	// Read from input into a slice
+	var readings []int
 	scanner := bufio.NewScanner(file)
-
-	// Read the first line
-	scanner.Scan()
-	prev, err := strconv.Atoi(scanner.Text())
-	if err != nil {
-		log.Fatal(err)
+	for scanner.Scan() {
+		val,_ := strconv.Atoi(scanner.Text())
+		readings = append(readings, val)
 	}
 
-	for scanner.Scan() {
-		num, err := strconv.Atoi(scanner.Text())
-		if err != nil {
-			log.Fatal(err)
-		}
+	total := 0
+	prev := 0
+	increasing := 0
+
+	for i := 0; i < len(readings)-2; i++ {
+		val := readings[i] + readings[i+1] + readings[i+2]
 		total++
-		if num > prev {
+		if prev != 0 && val > prev {
 			increasing++
 		}
-		prev = num
+		prev = val
 	}
 
 	fmt.Printf("Read %d entries, found %d increasing measurements\n", total, increasing)
